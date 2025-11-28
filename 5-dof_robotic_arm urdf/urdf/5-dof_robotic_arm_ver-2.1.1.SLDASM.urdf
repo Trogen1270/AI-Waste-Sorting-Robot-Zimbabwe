@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="5-dof_robotic_arm_ver-2.1.1.SLDASM">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.000395973071484104 -0.0123994918995056 0.102574953444877"
+        rpy="0 0 0" />
+      <mass
+        value="1.21905149876009" />
+      <inertia
+        ixx="0.00583987040789698"
+        ixy="-6.1347933866761E-05"
+        ixz="2.40571380305013E-05"
+        iyy="0.00553182274612335"
+        iyz="0.000173398429831278"
+        izz="0.00667499353989771" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.101960784313725 0.101960784313725 0.101960784313725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link-1">
+    <inertial>
+      <origin
+        xyz="-0.0307767454780889 -0.0250644996430834 -0.0139348928366279"
+        rpy="0 0 0" />
+      <mass
+        value="0.77736389341047" />
+      <inertia
+        ixx="0.00231095802545677"
+        ixy="-2.32125009560035E-08"
+        ixz="-5.31376549675497E-10"
+        iyy="0.00136225437776653"
+        iyz="6.5477827228429E-07"
+        izz="0.00133366567859037" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint-1"
+    type="revolute">
+    <origin
+      xyz="-0.0078702 -0.027577 0.22789"
+      rpy="0.7854 -1.5708 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="link-1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="6.283"
+      effort="16.17"
+      velocity="2" />
+  </joint>
+  <link
+    name="link-2">
+    <inertial>
+      <origin
+        xyz="0.0206828249455052 0.336344872903233 -0.0294274749136364"
+        rpy="0 0 0" />
+      <mass
+        value="1.05373867886367" />
+      <inertia
+        ixx="0.0366541415965383"
+        ixy="-1.06972206494076E-05"
+        ixz="-8.3456569678203E-06"
+        iyy="0.00052211974949916"
+        iyz="6.03374028387191E-05"
+        izz="0.0363034567332695" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint-2"
+    type="revolute">
+    <origin
+      xyz="0.0195 0.0077 -0.0345"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="link-1" />
+    <child
+      link="link-2" />
+    <axis
+      xyz="-0.022885 0 -0.99974" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="1617"
+      velocity="2" />
+  </joint>
+  <link
+    name="link-3">
+    <inertial>
+      <origin
+        xyz="0.328889672726058 -0.0722236303549397 0.057454351421005"
+        rpy="0 0 0" />
+      <mass
+        value="0.273919545900285" />
+      <inertia
+        ixx="0.00383212013468944"
+        ixy="-5.46538568531268E-06"
+        ixz="3.0699356701763E-06"
+        iyy="0.000359052374212516"
+        iyz="-0.000155800052288248"
+        izz="0.00351904412354081" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint-3"
+    type="revolute">
+    <origin
+      xyz="-0.11402 0.29337 0.0305"
+      rpy="3.1416 0 1.5699" />
+    <parent
+      link="link-2" />
+    <child
+      link="link-3" />
+    <axis
+      xyz="-1.9785E-05 -0.022885 0.99974" />
+    <limit
+      lower="0"
+      upper="3.142"
+      effort="16.17"
+      velocity="2" />
+  </joint>
+  <link
+    name="link-4">
+    <inertial>
+      <origin
+        xyz="-0.248269612920268 -0.0629025225003316 -0.0115324078109982"
+        rpy="0 0 0" />
+      <mass
+        value="0.0871537910640149" />
+      <inertia
+        ixx="5.70114628081997E-05"
+        ixy="-7.42276402204613E-07"
+        ixz="-4.23882490470954E-06"
+        iyy="8.80553133226209E-05"
+        iyz="-1.10457253913841E-06"
+        izz="4.27027941082601E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint-4"
+    type="revolute">
+    <origin
+      xyz="0.038 -0.14302 0.02996"
+      rpy="-3.1416 0 3.1407" />
+    <parent
+      link="link-3" />
+    <child
+      link="link-4" />
+    <axis
+      xyz="0 -0.022885 -0.99974" />
+    <limit
+      lower="0"
+      upper="-3.142"
+      effort="16.17"
+      velocity="2" />
+  </joint>
+  <link
+    name="link-5">
+    <inertial>
+      <origin
+        xyz="0.0685164200623804 0.0586711366015971 -0.300180984979103"
+        rpy="0 0 0" />
+      <mass
+        value="0.0267916360587393" />
+      <inertia
+        ixx="2.58025259702723E-06"
+        ixy="1.60450785386127E-07"
+        ixz="-5.13831004933039E-11"
+        iyy="9.58579856065166E-06"
+        iyz="-2.24464716654362E-09"
+        izz="1.05481575136574E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/link-5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint-5"
+    type="revolute">
+    <origin
+      xyz="0.093 -0.0029078 -0.086836"
+      rpy="0 -1.5708 0" />
+    <parent
+      link="link-4" />
+    <child
+      link="link-5" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="0"
+      upper="3.142"
+      effort="2.45"
+      velocity="2" />
+  </joint>
+  <link
+    name="gripper-palm">
+    <inertial>
+      <origin
+        xyz="-0.000852295782423323 -0.0743545431217645 -0.290120478320735"
+        rpy="0 0 0" />
+      <mass
+        value="0.0815290900235419" />
+      <inertia
+        ixx="5.11300011485085E-05"
+        ixy="8.18071131129301E-06"
+        ixz="-5.14638320962097E-06"
+        iyy="6.20598703485255E-05"
+        iyz="9.52777162274833E-06"
+        izz="5.01917193909703E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/gripper-palm.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/gripper-palm.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper-palm-joint"
+    type="fixed">
+    <origin
+      xyz="0.061816 -0.009 0.03"
+      rpy="0 0 3.1416" />
+    <parent
+      link="link-5" />
+    <child
+      link="gripper-palm" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left-jaw">
+    <inertial>
+      <origin
+        xyz="0.145942904899066 -0.0578535108815973 -0.221849734945783"
+        rpy="0 0 0" />
+      <mass
+        value="0.0284622881213147" />
+      <inertia
+        ixx="5.49954331955112E-05"
+        ixy="1.09262618869917E-07"
+        ixz="3.51223594239905E-05"
+        iyy="8.70900199894167E-05"
+        iyz="7.94758157635857E-08"
+        izz="3.25087082283506E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/left-jaw.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0.501960784313725 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/left-jaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left-jaw-joint"
+    type="revolute">
+    <origin
+      xyz="-0.022808 -0.0032752 0.030844"
+      rpy="0 0.62301 0" />
+    <parent
+      link="gripper-palm" />
+    <child
+      link="left-jaw" />
+    <axis
+      xyz="0.018586 0.99974 0.013353" />
+    <limit
+      lower="0"
+      upper="7"
+      effort="2.45"
+      velocity="1" />
+  </joint>
+  <link
+    name="right-jaw">
+    <inertial>
+      <origin
+        xyz="0.156958033457702 0.0695415014399802 -0.213961566056889"
+        rpy="0 0 0" />
+      <mass
+        value="0.0284518262346102" />
+      <inertia
+        ixx="5.4926547881768E-05"
+        ixy="1.07919295455092E-07"
+        ixz="3.50977854855502E-05"
+        iyy="8.70124289011238E-05"
+        iyz="8.11022922666606E-08"
+        izz="3.24998937867788E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/right-jaw.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0 0.501960784313725 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://5-dof_robotic_arm_ver-2.1.1.SLDASM/meshes/right-jaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right-jaw-joint"
+    type="revolute">
+    <origin
+      xyz="0.024199 0.007225 0.030844"
+      rpy="0 0.62439 3.1416" />
+    <parent
+      link="gripper-palm" />
+    <child
+      link="right-jaw" />
+    <axis
+      xyz="0.018567 0.99974 0.013379" />
+    <limit
+      lower="-7"
+      upper="0"
+      effort="2.45"
+      velocity="1" />
+  </joint>
+</robot>

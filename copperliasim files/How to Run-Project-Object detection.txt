@@ -1,0 +1,32 @@
+Run-Project-Object detection
+
+
+Start the Simulation ▶️
+The Python script cannot connect unless the CoppeliaSim simulation is running.
+
+
+Run the Script from the Terminal 💻
+
+Now, you will run the script from the Miniconda Prompt.
+
+Open Miniconda Prompt (or "Anaconda Prompt").
+
+Activate the Environment: You must activate the environment where you installed all the libraries (ultralytics, opencv, etc.). Type this command and press Enter:
+
+Bash
+
+>>conda activate yolo_env
+
+the prompt should now show (yolo_env) at the beginning.
+
+Navigate to Your Project Directory: Use the cd (change directory) command to go to your project folder
+
+Bash
+
+>>cd D:\Users\TROGEN\coppelia_vision_project
+
+Run the Python Script:
+
+Bash
+
+>>my_python_script_obb.py
