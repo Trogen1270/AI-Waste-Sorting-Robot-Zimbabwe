@@ -1,0 +1,128 @@
+-- -- OBJECT HANDLES --
+local targetHandle, masterGripperJoint, gripperAttachPoint, gripperSensorHandle
+-- -- GRIPPER STATE --
+local gripperOpenPosition = 0.7
+local gripperClosePosition = 0.0
+-- -- ROBOT STATE MACHINE --
+local state = 'WAITING_FOR_COMMAND'
+local taskQueue = {}
+local currentTask = 1
+local currentlyHeldObject = nil
+-- -- ROBOT POSITIONS (Poses) --
+local taskOrientation = {math.rad(0), math.rad(90), math.rad(0)}
+local homePos, homeOri = {-0.2998, 0.2315, 1.3461}, taskOrientation
+local placePos = {-0.6780, -0.8515, 0.9453}
+local safeHeight = 1.2
+
+function sysCall_init()
+    print('--- Robot State Machine Initializing (Python Mode) ---')
+    targetHandle = sim.getObjectHandle('target')
+    masterGripperJoint = sim.getObjectHandle('left_gripper_finger_joint')
+    gripperAttachPoint = sim.getObjectHandle('tip')
+    gripperSensorHandle = sim.getObjectHandle('gripperSensor')
+    
+    sim.setObjectPosition(targetHandle, -1, homePos)
+    sim.setObjectOrientation(targetHandle, -1, homeOri)
+    sim.setIntegerSignal('start_pick', 0)
+    sim.setIntegerSignal('grasp_executed', 0)
+end
+
+function sysCall_actuation()
+    if state == 'WAITING_FOR_COMMAND' then
+        if sim.getIntegerSignal('start_pick') == 1 then
+            sim.setIntegerSignal('start_pick', 0)
+            local coordStr = sim.getStringSignal('target_coords')
+            local coords = {}
+            for val in string.gmatch(coordStr, "([^,]+)") do
+                table.insert(coords, tonumber(val))
+            end
+            generatePickAndPlaceSequence(coords)
+            state = 'PERFORMING_TASK'
+        end
+    elseif state == 'PERFORMING_TASK' then
+        if currentTask > #taskQueue then
+            sim.setIntegerSignal('robot_task_complete', 1)
+            state = 'WAITING_FOR_COMMAND'
+            return
+        end
+        executeCurrentTask()
+    end
+end
+
+function generatePickAndPlaceSequence(objectCenterPos)
+    local graspOffsetZ = 0.039
+    local graspPos = {objectCenterPos[1], objectCenterPos[2], objectCenterPos[3] + graspOffsetZ}
+    local preGraspPos = {graspPos[1], graspPos[2], safeHeight}
+    local safeApproachPlacePos = {placePos[1], placePos[2], safeHeight}
+    
+    taskQueue = {
+        {action='open_gripper'},
+        {action='wait', time=0.5},
+        {action='move', position=preGraspPos, orientation=taskOrientation, speed=0.8},
+        {action='move', position=graspPos, orientation=taskOrientation, speed=0.3},
+        {action='close_gripper'},
+        {action='wait', time=1.0},
+        {action='grasp'},
+        {action='wait', time=0.5},
+        {action='move', position=preGraspPos, orientation=taskOrientation, speed=0.8},
+        {action='move', position=safeApproachPlacePos, orientation=taskOrientation, speed=0.8},
+        {action='move', position=placePos, orientation=taskOrientation, speed=0.8},
+        {action='open_gripper'},
+        {action='wait', time=0.5},
+        {action='release'},
+        {action='wait', time=1.0},
+        {action='move', position=safeApproachPlacePos, orientation=taskOrientation, speed=0.8},
+        {action='move', position=homePos, orientation=homeOri, speed=0.5}
+    }
+    currentTask = 1
+end
+
+function executeCurrentTask()
+    local task = taskQueue[currentTask]
+    if task.action == 'move' then
+        sim.setObjectOrientation(targetHandle, -1, task.orientation)
+        local currentPos = sim.getObjectPosition(targetHandle, -1)
+        local targetPos = task.position
+        local distance = math.sqrt((targetPos[1]-currentPos[1])^2 + (targetPos[2]-currentPos[2])^2 + (targetPos[3]-currentPos[3])^2)
+        
+        if distance < 0.01 then
+            currentTask = currentTask + 1
+        else
+            local moveFraction = (task.speed * sim.getSimulationTimeStep()) / distance
+            if moveFraction > 1.0 then moveFraction = 1.0 end
+            local newPos = {}
+            for i=1,3 do newPos[i] = currentPos[i] + (targetPos[i] - currentPos[i]) * moveFraction end
+            sim.setObjectPosition(targetHandle, -1, newPos)
+        end
+    elseif task.action == 'open_gripper' then
+        sim.setJointTargetPosition(masterGripperJoint, gripperOpenPosition)
+        currentTask = currentTask + 1
+    elseif task.action == 'close_gripper' then
+        sim.setJointTargetPosition(masterGripperJoint, gripperClosePosition)
+        currentTask = currentTask + 1
+    elseif task.action == 'grasp' then
+        local result, distance, detectedPoint, objectHandle = sim.readProximitySensor(gripperSensorHandle)
+        if result > 0 and objectHandle then
+            currentlyHeldObject = objectHandle
+            sim.setObjectInt32Param(objectHandle, sim.shapeintparam_static, 1)
+            sim.resetDynamicObject(objectHandle)
+            sim.setObjectParent(objectHandle, gripperAttachPoint, true)
+            sim.setIntegerSignal('grasp_executed', 1)
+        end
+        currentTask = currentTask + 1
+    elseif task.action == 'release' then
+        if currentlyHeldObject then
+            sim.setObjectParent(currentlyHeldObject, -1, true)
+            sim.setObjectInt32Param(currentlyHeldObject, sim.shapeintparam_static, 0)
+            sim.resetDynamicObject(currentlyHeldObject)
+            currentlyHeldObject = nil
+        end
+        currentTask = currentTask + 1
+    elseif task.action == 'wait' then
+        if not task.startTime then task.startTime = sim.getSimulationTime() end
+        if sim.getSimulationTime() - task.startTime >= task.time then
+            task.startTime = nil
+            currentTask = currentTask + 1
+        end
+    end
+end
